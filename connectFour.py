@@ -1,9 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow,  \
                             QApplication, \
-                            QGridLayout, \
                             QWidget, \
-                            QPushButton, \
-                            QLabel, \
                             QMessageBox
 
 import PyQt5.QtGui as QtGui
