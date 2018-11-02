@@ -8,14 +8,14 @@ import sys
 from grid import gridLayout
 from gameOverChecker import gameOverChecker
 
+START_PLAYER = "yellow"
 
 class Qt_window(QMainWindow):
     def __init__(self):
         super(Qt_window, self).__init__()
         self.initUI()
         self.show()  # have the main window appear onscreen
-        self.playerTurn = "red"
-        self.initBackgroundColor()
+        self.playerTurn = START_PLAYER
         self.matrix = self.initGameMatrix()  # create the matrix to store the current game state
         self.columnPieceCounts = self.initColumnPieceCounts()
         self.grid.loopInitButtons(self.dropPiece)
@@ -29,7 +29,7 @@ class Qt_window(QMainWindow):
 
     def initBackgroundColor(self):
         palette = QtGui.QPalette()  # color options can be used with the Qpalette module
-        palette.setColor(QtGui.QPalette.Background, QtGui.QColor("#99ccff"))  # create color palette for main window
+        palette.setColor(QtGui.QPalette.Background, QtGui.QColor("#185dcc"))  # create color palette for main window
         self.setPalette(palette)  # set the color for the main window
 
     def initGameMatrix(self):
@@ -49,7 +49,7 @@ class Qt_window(QMainWindow):
 
     def changeTurn(self):
         if self.playerTurn == "red":
-            self.playerTurn = "blue"
+            self.playerTurn = "yellow"
         else:
             self.playerTurn = "red"
 
@@ -58,13 +58,10 @@ class Qt_window(QMainWindow):
         if self.columnPieceCounts[column] is not 6:
             self.columnPieceCounts[column] += 1
             row = self.columnPieceCounts[column]
-            color = self.playerTurn
-            self.matrix[row - 1][column] = color
-            numberOfRowsIndex = 7
-            self.grid.getGridWidget(numberOfRowsIndex - row, column + 1).setStyleSheet("background-color:" + color + "; border-radius: 10; \
-             border: 1px inset black; min-height: 40;")
+            self.matrix[row - 1][column] = self.playerTurn
+            self.grid.getGridWidget(7 - row, column + 1).setStyleSheet("background-color:" +
+                            self.playerTurn + "; border-radius: 21; border: 1px inset black; height: 20; width: 20;")
             if self.isGameOver():
-                print(self.playerTurn + " won")
                 self.popupGameOver()
                 self.restartGame()
             else:
@@ -83,7 +80,7 @@ class Qt_window(QMainWindow):
     def restartGame(self):
         for i in range(7, self.grid.layout.count()):
             label = self.grid.layout.itemAt(i).widget()
-            label.setStyleSheet("background-color: white; border-radius: 10; \
+            label.setStyleSheet("background-color: white; border-radius: 21; \
              border: 1px inset black; min-height: 40;")
         self.matrix = self.initGameMatrix()
         for i in range(0, len(self.columnPieceCounts)):

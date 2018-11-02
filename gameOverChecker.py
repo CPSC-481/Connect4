@@ -2,7 +2,7 @@ class gridPosition():
     def __init__(self, row=0, column=0, color="white"):
         self.row = row
         self.column = column
-        self.color = "white"
+        self.color = color
         self.piecesInARow = 1
 
 class gameOverChecker():
@@ -16,10 +16,8 @@ class gameOverChecker():
         return False
 
     def checkVerticals(self):
-        gridPos = gridPosition(0, 0)
         for column in range(0, 7):
-            gridPos.column = column
-            gridPos.color = self.matrix[gridPos.row][gridPos.column]
+            gridPos = gridPosition(0, column, self.matrix[0][column])
             while gridPos.color is not "white" and gridPos.row in range(0, 5):
                 gridPos.row += 1
                 gridPos = self.checkNextColor(gridPos)
@@ -27,10 +25,8 @@ class gameOverChecker():
                     return True
 
     def checkHorizontal(self):
-        gridPos = gridPosition(0, 0)
         for row in range(0, 6):
-            gridPos.row = row
-            gridPos.color = self.matrix[gridPos.row][gridPos.column]
+            gridPos = gridPosition(row, 0, self.matrix[row][0])
             while gridPos.column < 6:
                 gridPos.column += 1
                 gridPos = self.checkNextColor(gridPos)

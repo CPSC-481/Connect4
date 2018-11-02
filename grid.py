@@ -26,7 +26,8 @@ class gridLayout():
         for i in range(7, self.layout.count()):
             child = self.layout.itemAt(i).widget()
             # you can change the labels appearance with a CSS stylesheet
-            child.setStyleSheet("background-color: white; border-radius: 10; border: 1px inset black; min-height: 40")
+            child.setStyleSheet("background-color: white; border-radius: 21; border: 1px inset black;"
+                                " min-height: 40; min-width: 40")
 
     # connect the event (called slots in Qt) to each button press
     def loopInitButtons(self, callback):
