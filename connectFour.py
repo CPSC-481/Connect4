@@ -56,7 +56,7 @@ class Qt_window(QMainWindow):
 
     def dropPiece(self, widget):
         column = self.grid.layout.indexOf(widget)
-        if self.columnPieceCounts[column] is not 6:
+        if self.columnPieceCounts[column] < 7:
             self.columnPieceCounts[column] += 1
             row = self.columnPieceCounts[column]
             self.matrix[row - 1][column] = self.playerTurn
@@ -67,11 +67,9 @@ class Qt_window(QMainWindow):
                 self.restartGame()
             else:
                 self.changeTurn()
-        # testState = State(None, self.matrix, self.columnPieceCounts)
-        # testStateTree = StateTree(testState, 5, "yellow")
-        # print("SUCCESS!")
-
-
+        testState = State(None, self.matrix, self.columnPieceCounts)
+        testStateTree = StateTree(testState, 7, "yellow")
+        print("SUCCESS!")
     def isGameOver(self):
         checker = gameOverChecker(self.matrix)
         return checker.checkIfGameOver()
