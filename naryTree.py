@@ -23,18 +23,18 @@ class StateTree:
                 if column < 5:                                                   # columns are indexed 0 1 2 3 4 5
                     newState = State(state, state.matrix, state.columnCounts)
                     newState.columnCounts[index] += 1
-                    newState.matrix[column + 1][index] = color
+                    newState.matrix[column][index] = color
                     state.children.append(newState)
-                    self.generateStatesToPlyLevel(newState, ply + 1, self.swapTurnColor(color))
+                    self.generateStatesToPlyLevel(newState, ply + 1, swapTurnColor(color))
         else:
             self.leafs.append(state)
 
-    def swapTurnColor(self, color):
-        if color is "yellow":
-            color = "red"
-        else:
-            color = "yellow"
-        return color
+def swapTurnColor(color):
+    if color is "yellow":
+        color = "red"
+    else:
+        color = "yellow"
+    return color
 
 def copyMatrix(matrix):
     newMatrix = []

@@ -7,7 +7,8 @@ import PyQt5.QtGui as QtGui
 import sys
 from grid import gridLayout
 from gameOverChecker import gameOverChecker
-from naryTree import State, StateTree
+from naryTree import State, StateTree, swapTurnColor
+from stateEvaluation import evaluateState
 
 START_PLAYER = "yellow"
 
@@ -68,8 +69,9 @@ class Qt_window(QMainWindow):
             else:
                 self.changeTurn()
         testState = State(None, self.matrix, self.columnPieceCounts)
-        testStateTree = StateTree(testState, 7, "yellow")
-        print("SUCCESS!")
+        testStateTree = StateTree(testState, 5, swapTurnColor(self.playerTurn))
+        val = evaluateState(testStateTree.leafs[0], self.playerTurn)
+        print("SUCCESS!", val)
     def isGameOver(self):
         checker = gameOverChecker(self.matrix)
         return checker.checkIfGameOver()
