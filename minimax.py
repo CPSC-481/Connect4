@@ -1,12 +1,16 @@
+from connectFour import swapTurnColor
+from stateEvaluation import evaluateState
 from naryTree import State
 
-
-def minimax(stateTree):
-    isMax = stateTree.leafsMinOrMax is "MAX"
+def minimax(stateTree, color):
+    isMax = stateTree.isMax
     currentLevelNodes = stateTree.leafs[:]
     while currentLevelNodes[0].parent is not stateTree.root:
+        for state in currentLevelNodes:
+            state.value = evaluateState(state, color)
         currentLevelNodes = getNextMinimaxLayer(currentLevelNodes, isMax)
         isMax = not isMax
+        color = swapTurnColor(color)
     bestState = None
     for node in currentLevelNodes:
         bestState = getMaxOrMinState(bestState, node, isMax)

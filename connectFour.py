@@ -9,6 +9,7 @@ from grid import gridLayout
 from gameOverChecker import gameOverChecker
 from naryTree import State, StateTree, swapTurnColor
 from stateEvaluation import evaluateState
+from minimax import minimax
 
 START_PLAYER = "yellow"
 
@@ -69,10 +70,17 @@ class Qt_window(QMainWindow):
                 self.restartGame()
             else:
                 self.changeTurn()
-        testState = State(None, self.matrix, self.columnPieceCounts)
-        testStateTree = StateTree(testState, 5, swapTurnColor(self.playerTurn))
-        val = evaluateState(testStateTree.leafs[0], self.playerTurn)
+        currentState = State(None, self.matrix, self.columnPieceCounts)
+        stateTree = StateTree(currentState, 5, swapTurnColor(self.playerTurn))
+        nextMoveState = minimax(stateTree, self.playerTurn)
+
+        #MOVE TO NEXT STATE
+
+        #test eva;iate state
+        val = evaluateState(stateTree.leafs[0], self.playerTurn)
         print("SUCCESS!", val)
+
+
     def isGameOver(self):
         checker = gameOverChecker(self.matrix)
         return checker.checkIfGameOver()

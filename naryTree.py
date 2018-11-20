@@ -1,3 +1,5 @@
+
+
 class State:
     def __init__(self, parent, matrix, columnCounts):
         self.parent = parent
@@ -14,7 +16,7 @@ class StateTree:
         self.leafs = []
         self.plyLevel = plyLevel
         self.generateStatesToPlyLevel(root, 1, initialTurnColor)
-        self.leafsMinOrMax = "MAX"
+        self.isMax = True
 
     def generateStatesToPlyLevel(self, state, ply, color):
         if ply <= self.plyLevel:
@@ -24,7 +26,7 @@ class StateTree:
                     newState.columnCounts[index] += 1
                     newState.matrix[column][index] = color
                     state.children.append(newState)
-                    self.leafsMinOrMax = self.swapMinMax(self.leafsMinOrMax)
+                    self.isMax = not self.isMax
                     self.generateStatesToPlyLevel(newState, ply + 1, swapTurnColor(color))
         else:
             self.leafs.append(state)
