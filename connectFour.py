@@ -12,6 +12,7 @@ from stateEvaluation import evaluateState
 
 START_PLAYER = "yellow"
 
+
 class Qt_window(QMainWindow):
     def __init__(self):
         super(Qt_window, self).__init__()
