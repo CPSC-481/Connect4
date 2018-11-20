@@ -1,10 +1,8 @@
-from copy import copy, deepcopy
-
 class State:
     def __init__(self, parent, matrix, columnCounts):
         self.parent = parent
         self.children = []                              # an empty list
-        self.matrix = copyMatrix(matrix)             # a matrix
+        self.matrix = copyMatrix(matrix)                # a matrix
         self.columnCounts = columnCounts[:]             # a counter
         self.value = None                               # none is null
         self.alphaBeta = {"alpha": None, "beta": None}  # values for alpha and beta. none equivalent to null
@@ -26,6 +24,7 @@ class StateTree:
                     newState.columnCounts[index] += 1
                     newState.matrix[column][index] = color
                     state.children.append(newState)
+                    self.leafsMinOrMax = self.swapMinMax(self.leafsMinOrMax)
                     self.generateStatesToPlyLevel(newState, ply + 1, swapTurnColor(color))
         else:
             self.leafs.append(state)
@@ -36,7 +35,7 @@ class StateTree:
         while currentLevelNodes[0].parent is not self.root:
             newNodeList = []
             for index, node in enumerate(currentLevelNodes):
-                if not newNodeList or newNodeList[-1] is not node.parent:
+                if not newNodeList or newNodeList[-1].parent is not node.parent:
                     newNodeList.append(node)
                 elif newNodeList[-1] is node.parent:
                     if minMaxState is "MIN":
@@ -47,7 +46,7 @@ class StateTree:
                             newNodeList[-1] = node
             currentLevelNodes = newNodeList[:]
             self.swapMinMax(minMaxState)
-        bestNode = State(None, None, None)
+        bestNode = None
         if minMaxState is "MAX":
             bestNode.value = float("-inf")
             for node in currentLevelNodes:

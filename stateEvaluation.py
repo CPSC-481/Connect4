@@ -15,6 +15,31 @@ def applyHeuristicHorizontally(state, playerColor):
     return val
 
 
+def applyHeuristicVertically(state, playerColor):
+    val = 0
+    for column in range(0, 7):
+        for startPosition in range(0, 3):
+            bubble = []
+            for i in range(0, 4):
+                bubble.append(state.matrix[startPosition + i][column])
+            val += evaluateBubbles(bubble, playerColor)
+    return val
+
+
+def applyHeuristicDiagonalDownUp(state, playerColor):
+    for row in range(0, 3):
+        print("foo")
+    for column in range(0, 4):
+        print("foo")
+
+
+def applyHeuristicDiagonalUpDown(state, playerColor):
+    for row in range(3, 6):
+        print("foo")
+    for column in range(0, 4):
+        print("foo")
+
+
 def evaluateBubbles(bubble, playerColor):
     colorEncountered = "white"
     colorCount = 0
