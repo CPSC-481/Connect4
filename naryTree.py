@@ -29,42 +29,6 @@ class StateTree:
         else:
             self.leafs.append(state)
 
-    def minimax(self):
-        minMaxState = self.leafsMinOrMax
-        currentLevelNodes = self.leafs[:]
-        while currentLevelNodes[0].parent is not self.root:
-            newNodeList = []
-            for index, node in enumerate(currentLevelNodes):
-                if not newNodeList or newNodeList[-1].parent is not node.parent:
-                    newNodeList.append(node)
-                elif newNodeList[-1] is node.parent:
-                    if minMaxState is "MIN":
-                        if newNodeList[-1].value > node.value:
-                            newNodeList[-1] = node
-                    elif minMaxState is "MAX":
-                        if newNodeList[-1].value < node.value:
-                            newNodeList[-1] = node
-            currentLevelNodes = newNodeList[:]
-            self.swapMinMax(minMaxState)
-        bestNode = None
-        if minMaxState is "MAX":
-            bestNode.value = float("-inf")
-            for node in currentLevelNodes:
-                if node.value > bestNode.value:
-                    bestNode = node
-        if minMaxState is "MIN":
-            bestNode.value = float("inf")
-            for node in currentLevelNodes:
-                if node.value < bestNode.value:
-                    bestNode = node
-        return bestNode
-
-    def swapMinMax(self, MinMax):
-        if MinMax is "MIN":
-            return "MAX"
-        return "MIN"
-
-
 def swapTurnColor(color):
     if color is "yellow":
         color = "red"
