@@ -14,9 +14,10 @@ class StateTree:
         self.leafs = []
         self.plyLevel = plyLevel
         self.generateStatesToPlyLevel(root, 1, initialTurnColor)
-        self.leafsMinOrMax = "MAX"
+        #self.leafsMinOrMax = "MAX"
 
     def generateStatesToPlyLevel(self, state, ply, color):
+        self.leafsMinOrMax = "MAX"
         if ply <= self.plyLevel:
             for index, column in enumerate(state.columnCounts):
                 if column < 5:                                                   # columns are indexed 0 1 2 3 4 5
