@@ -15,8 +15,8 @@ class StateTree:
         self.root = root
         self.leafs = []
         self.plyLevel = plyLevel
-        self.generateStatesToPlyLevel(root, 1, initialTurnColor)
         self.isMax = True
+        self.generateStatesToPlyLevel(root, 1, initialTurnColor)
 
     def generateStatesToPlyLevel(self, state, ply, color):
         if ply <= self.plyLevel:

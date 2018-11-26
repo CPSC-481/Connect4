@@ -9,7 +9,7 @@ from grid import gridLayout
 from gameOverChecker import gameOverChecker
 from naryTree import State, StateTree, swapTurnColor
 from stateEvaluation import evaluateState
-from minimax import minimax
+from minimaxFunctions import minimax
 
 START_PLAYER = "yellow"
 
@@ -71,15 +71,16 @@ class Qt_window(QMainWindow):
             else:
                 self.changeTurn()
         currentState = State(None, self.matrix, self.columnPieceCounts)
-        stateTree = StateTree(currentState, 5, swapTurnColor(self.playerTurn))
-        nextMoveState = minimax(stateTree, self.playerTurn)
+        stateTree = StateTree(currentState, 3, swapTurnColor(self.playerTurn))
 
-        #MOVE TO NEXT STATE
-
-        #test eva;iate state
+        # test evaluate state
         val = evaluateState(stateTree.leafs[0], self.playerTurn)
-        print("SUCCESS!", val)
+        print("Heuristic Value: ", val)
 
+        nextMoveNumber = minimax(stateTree, self.playerTurn)
+        print("Next Minimax State: ", nextMoveNumber)
+
+        # MOVE TO NEXT STATE
 
     def isGameOver(self):
         checker = gameOverChecker(self.matrix)

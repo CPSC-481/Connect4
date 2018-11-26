@@ -1,6 +1,9 @@
 def evaluateState(state, playerColor):
     totalHeuristicValue = 0
-    totalHeuristicValue += applyHeuristicHorizontally(state, playerColor)
+    totalHeuristicValue += applyHeuristicHorizontally(state, playerColor), \
+        applyHeuristicVertically(state, playerColor), \
+        applyHeuristicDiagonalDownUp(state, playerColor), \
+        applyHeuristicDiagonalUpDown(state, playerColor)
     return totalHeuristicValue
 
 
@@ -27,17 +30,53 @@ def applyHeuristicVertically(state, playerColor):
 
 
 def applyHeuristicDiagonalDownUp(state, playerColor):
+    val = 0
     for row in range(0, 3):
-        print("foo")
+        column = 0
+        rowStart = row
+        while column < 3 and rowStart < 2:
+            bubble = []
+            for i in range(0, 4):
+                bubble.append(state.matrix[rowStart + i][column + i])
+            val += evaluateBubbles(bubble, playerColor)
+            column += 1
+            rowStart += 1
     for column in range(0, 4):
-        print("foo")
+        row = 0
+        columnStart = column
+        while columnStart < 3 and row < 2:
+            bubble = []
+            for i in range(0, 4):
+                bubble.append(state.matrix[row + i][columnStart + i])
+                val += evaluateBubbles(bubble, playerColor)
+                columnStart += 1
+                row += 1
+    return val
 
 
 def applyHeuristicDiagonalUpDown(state, playerColor):
+    val = 0
     for row in range(3, 6):
-        print("foo")
+        rowStart = row
+        column = 0
+        while rowStart > 0 and column < 3:
+            bubble = []
+            for i in range(0, 4):
+                bubble.append(state.matrix[column + i][rowStart - i])
+                val += evaluateBubbles(bubble, playerColor)
+                column += 1
+                rowStart -= 1
     for column in range(0, 4):
-        print("foo")
+        columnStart = column
+        row = 6
+        while columnStart < 3 and row > 0:
+            bubble = []
+            for i in range(0, 4):
+                bubble.append(state.matrix[columnStart + i][row - i])
+                val += evaluateBubbles(bubble, playerColor)
+                columnStart += 1
+                row -= 1
+    return val
 
 
 def evaluateBubbles(bubble, playerColor):
