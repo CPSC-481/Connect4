@@ -73,14 +73,29 @@ class Qt_window(QMainWindow):
         currentState = State(None, self.matrix, self.columnPieceCounts)
         stateTree = StateTree(currentState, 3, swapTurnColor(self.playerTurn))
 
-        # test evaluate state
-        val = evaluateState(stateTree.leafs[0], self.playerTurn)
-        print("Heuristic Value: ", val)
 
-        nextMoveNumber = minimax(stateTree, self.playerTurn)
-        print("Next Minimax State: ", nextMoveNumber)
+# !!!TESTING AREA!!!TESTING AREA!!!TESTING AREA!!!TESTING AREA!!!TESTING AREA!!!TESTING AREA!!!
+
+
+        # nextMoveNumber = minimax(stateTree, self.playerTurn)
+        # print("Next Minimax State: ", nextMoveNumber)
 
         # MOVE TO NEXT STATE
+
+        testMatrix = [["red", "red", "white", "white", "white", "white", "white"],     # -4
+                      ["yellow", "red", "white", "white", "white", "white", "white"],  # -4
+                      ["white", "white", "white", "white", "white", "white", "white"], # 0
+                      ["white", "white", "white", "white", "white", "white", "white"], # 4
+                      ["white", "white", "white", "white", "white", "white", "white"], # 8
+                      ["white", "white", "white", "white", "white", "white", "white"]] # 12
+
+        testColumnCounts = [2, 2, 0, 0, 0, 0, 0]
+        testState = State(None, testMatrix, testColumnCounts)
+        val = evaluateState(testState, "red")
+        print("Heuristic Value: ", val)
+
+# !!!TESTING AREA!!!TESTING AREA!!!TESTING AREA!!!TESTING AREA!!!TESTING AREA!!!TESTING AREA!!!
+
 
     def isGameOver(self):
         checker = gameOverChecker(self.matrix)
