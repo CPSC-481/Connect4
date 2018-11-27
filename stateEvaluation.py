@@ -17,24 +17,27 @@ class Bubble:
 def applyHeuristicHorizontally(state, playerColor):
     val = 0
     for row in range(0, 6):
-        for startPosition in range(0, 4):
-            bubble = []
-            for i in range(0, 4):
-                bubble.append(state.matrix[row][startPosition + i])
-            val += evaluateBubbles(bubble, playerColor)
+        for column in range(0, 4):
+            bubble = Bubble(row, column)
+            horizontalAndVerticalHelper(bubble, state, playerColor)
+            val += horizontalAndVerticalHelper()
     return val
 
 
 def applyHeuristicVertically(state, playerColor):
     val = 0
     for column in range(0, 7):
-        for startPosition in range(0, 3):
-            bubble = []
-            for i in range(0, 4):
-                bubble.append(state.matrix[startPosition + i][column])
-            val += evaluateBubbles(bubble, playerColor)
+        for row in range(0, 3):
+            bubble = Bubble(row, column)
+            horizontalAndVerticalHelper(bubble, state, playerColor)
+            val += horizontalAndVerticalHelper()
     return val
 
+
+def horizontalAndVerticalHelper(bubble, state, playerColor):
+    for i in range(0, 4):
+        bubble.values.append(state.matrix[bubble.row][bubble.column])
+    return evaluateBubbles(bubble.values, playerColor)
 
 def applyHeuristicDiagonalDownUp(state, playerColor):
     val = 0
