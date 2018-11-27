@@ -1,10 +1,17 @@
 def evaluateState(state, playerColor):
     totalHeuristicValue = 0
     totalHeuristicValue += applyHeuristicHorizontally(state, playerColor), \
-        applyHeuristicVertically(state, playerColor), \
-        applyHeuristicDiagonalDownUp(state, playerColor), \
-        applyHeuristicDiagonalUpDown(state, playerColor)
+                           applyHeuristicVertically(state, playerColor), \
+                           applyHeuristicDiagonalDownUp(state, playerColor), \
+                           applyHeuristicDiagonalUpDown(state, playerColor)
     return totalHeuristicValue
+
+
+class Bubble:
+    def __init__(self, row, column):
+        self.row = row
+        self.column = column
+        self.values = []
 
 
 def applyHeuristicHorizontally(state, playerColor):
@@ -32,50 +39,41 @@ def applyHeuristicVertically(state, playerColor):
 def applyHeuristicDiagonalDownUp(state, playerColor):
     val = 0
     for row in range(0, 3):
-        column = 0
-        rowStart = row
-        while column < 3 and rowStart < 2:
-            bubble = []
-            for i in range(0, 4):
-                bubble.append(state.matrix[rowStart + i][column + i])
-            val += evaluateBubbles(bubble, playerColor)
-            column += 1
-            rowStart += 1
+        bubble = Bubble(row, 0)
+        while bubble.rowStart < 2 and bubble.column < 3:
+            val += getValAndIncrementBubblePosition(bubble, state, playerColor, True)
     for column in range(0, 4):
-        row = 0
-        columnStart = column
-        while columnStart < 3 and row < 2:
-            bubble = []
-            for i in range(0, 4):
-                bubble.append(state.matrix[row + i][columnStart + i])
-                val += evaluateBubbles(bubble, playerColor)
-                columnStart += 1
-                row += 1
+        bubble = Bubble(0, column)
+        while bubble.row < 2 and bubble.column < 3:
+            val += getValAndIncrementBubblePosition(bubble, state, playerColor, True)
     return val
 
 
 def applyHeuristicDiagonalUpDown(state, playerColor):
     val = 0
     for row in range(3, 6):
-        rowStart = row
-        column = 0
-        while rowStart > 0 and column < 3:
-            bubble = []
-            for i in range(0, 4):
-                bubble.append(state.matrix[column + i][rowStart - i])
-                val += evaluateBubbles(bubble, playerColor)
-                column += 1
-                rowStart -= 1
+        bubble = Bubble(row, 0)
+        while bubble.row > 0 and bubble.column < 3:
+            val += getValAndIncrementBubblePosition(bubble, state, playerColor, False)
     for column in range(0, 4):
-        columnStart = column
-        row = 6
-        while columnStart < 3 and row > 0:
-            bubble = []
-            for i in range(0, 4):
-                bubble.append(state.matrix[columnStart + i][row - i])
-                val += evaluateBubbles(bubble, playerColor)
-                columnStart += 1
-                row -= 1
+        bubble = Bubble(column, 6)
+        while bubble.row > 0 and bubble.column < 3:
+            val += getValAndIncrementBubblePosition(bubble, state, playerColor, False)
+    return val
+
+
+def getValAndIncrementBubblePosition(bubble, state, color, isDownUp):
+    for i in range(0, 4):
+        columnVal = bubble.column + 1
+        if not isDownUp:
+            columnVal = bubble.column - 1
+        bubble.values.append(state.matrix[bubble.row + i][columnVal])
+    val = evaluateBubbles(bubble.values, color)
+    bubble.column += 1
+    if isDownUp:
+        bubble.row += 1
+    else:
+        bubble.row -= 1
     return val
 
 
