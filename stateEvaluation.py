@@ -29,6 +29,7 @@ def applyHeuristicVertically(state, playerColor):
         for row in range(0, 3):
             bubble = Bubble(row, column)
             val += horizontalAndVerticalHelper(bubble, state, playerColor, False)
+            print("foo")
     return val
 
 
