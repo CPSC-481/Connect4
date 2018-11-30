@@ -83,7 +83,7 @@ class Qt_window(QMainWindow):
         # MOVE TO NEXT STATE
 
         testMatrix = [["red", "red", "white", "white", "white", "white", "white"],     # -4
-                      ["yellow", "red", "white", "white", "white", "white", "white"],  # -4
+                      ["yellow", "white", "white", "white", "white", "white", "white"],  # -4
                       ["white", "white", "white", "white", "white", "white", "white"], # 0
                       ["white", "white", "white", "white", "white", "white", "white"], # 4
                       ["white", "white", "white", "white", "white", "white", "white"], # 8

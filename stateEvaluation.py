@@ -1,7 +1,6 @@
 def evaluateState(state, playerColor):
     totalHeuristicValue = 0
     totalHeuristicValue += applyHeuristicHorizontally(state, playerColor)
-    print("After horizontal: ", totalHeuristicValue)
     totalHeuristicValue += applyHeuristicVertically(state, playerColor)
     totalHeuristicValue += applyHeuristicDiagonalDownUp(state, playerColor)
     totalHeuristicValue += applyHeuristicDiagonalUpDown(state, playerColor)
@@ -33,9 +32,13 @@ def applyHeuristicVertically(state, playerColor):
     return val
 
 
-def horizontalAndVerticalHelper(bubble, state, playerColor):
+def horizontalAndVerticalHelper(bubble, state, playerColor, isHorizontal):
     for i in range(0, 4):
         bubble.values.append(state.matrix[bubble.row][bubble.column])
+        if isHorizontal:
+            bubble.row += 1
+        else:
+            bubble.column += 1
     return evaluateBubbles(bubble.values, playerColor)
 
 
