@@ -19,7 +19,7 @@ def applyHeuristicHorizontally(state, playerColor):
     for row in range(0, 6):
         for column in range(0, 4):
             bubble = Bubble(row, column)
-            val += horizontalAndVerticalHelper(bubble, state, playerColor)
+            val += horizontalAndVerticalHelper(bubble, state, playerColor, True)
     return val
 
 
@@ -28,7 +28,7 @@ def applyHeuristicVertically(state, playerColor):
     for column in range(0, 7):
         for row in range(0, 3):
             bubble = Bubble(row, column)
-            val += horizontalAndVerticalHelper(bubble, state, playerColor)
+            val += horizontalAndVerticalHelper(bubble, state, playerColor, False)
     return val
 
 
@@ -36,9 +36,9 @@ def horizontalAndVerticalHelper(bubble, state, playerColor, isHorizontal):
     for i in range(0, 4):
         bubble.values.append(state.matrix[bubble.row][bubble.column])
         if isHorizontal:
-            bubble.row += 1
-        else:
             bubble.column += 1
+        else:
+            bubble.row += 1
     return evaluateBubbles(bubble.values, playerColor)
 
 
@@ -90,12 +90,15 @@ def evaluateBubbles(bubble, playerColor):
     for color in bubble:
         if color is not colorEncountered:
             if colorEncountered is not "white":
-                return 0
+                if color is not "white":
+                    return 0
             else:
                 colorCount += 1
                 colorEncountered = color
-        colorCount += 1
-    if colorEncountered == "white":
+        else:
+            if color is not "white":
+                colorCount += 1
+    if colorCount is 0:
         return 1
     val = 2 ** colorCount
     if colorEncountered is not playerColor:
