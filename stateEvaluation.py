@@ -45,16 +45,17 @@ def horizontalAndVerticalHelper(bubble, state, playerColor, isHorizontal):
 
 def applyHeuristicDiagonalDownUp(state, playerColor):
     val = 0
-    for row in range(0, 3):
+    for row in range(0, 4):
         bubble = Bubble(row, 0)
-        while bubble.row < 2 and bubble.column < 3:
+        while bubble.row < 3 and bubble.column < 3:
             val += getValAndIncrementBubblePosition(bubble, state, playerColor, True)
-    for column in range(0, 4):
+            print("foo")
+    for column in range(1, 5):
         bubble = Bubble(0, column)
-        while bubble.row < 2 and bubble.column < 3:
+        while bubble.row < 3 and bubble.column < 4:
             val += getValAndIncrementBubblePosition(bubble, state, playerColor, True)
+            print("foo")
     return val
-
 
 
 def applyHeuristicDiagonalUpDown(state, playerColor):
@@ -71,6 +72,7 @@ def applyHeuristicDiagonalUpDown(state, playerColor):
 
 
 def getValAndIncrementBubblePosition(bubble, state, color, isDownUp):
+    bubble.values = []
     for i in range(0, 4):
         columnVal = bubble.column + i
         if not isDownUp:
