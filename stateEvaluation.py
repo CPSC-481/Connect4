@@ -29,7 +29,6 @@ def applyHeuristicVertically(state, playerColor):
         for row in range(0, 3):
             bubble = Bubble(row, column)
             val += horizontalAndVerticalHelper(bubble, state, playerColor, False)
-            print("foo")
     return val
 
 
@@ -47,14 +46,12 @@ def applyHeuristicDiagonalDownUp(state, playerColor):
     val = 0
     for row in range(0, 4):
         bubble = Bubble(row, 0)
-        while bubble.row < 3 and bubble.column < 3:
+        while bubble.row < 3 and bubble.column < 4:
             val += getValAndIncrementBubblePosition(bubble, state, playerColor, True)
-            print("foo")
     for column in range(1, 5):
         bubble = Bubble(0, column)
         while bubble.row < 3 and bubble.column < 4:
             val += getValAndIncrementBubblePosition(bubble, state, playerColor, True)
-            print("foo")
     return val
 
 
@@ -62,11 +59,11 @@ def applyHeuristicDiagonalUpDown(state, playerColor):
     val = 0
     for row in range(3, 6):
         bubble = Bubble(row, 0)
-        while bubble.row > 0 and bubble.column > 3:
+        while bubble.row > 2 and bubble.column < 4:
             val += getValAndIncrementBubblePosition(bubble, state, playerColor, False)
-    for column in range(0, 4):
-        bubble = Bubble(column, 6)
-        while bubble.row > 0 and bubble.column < 3:
+    for column in range(1, 4):
+        bubble = Bubble(5, column)
+        while bubble.row > 2 and bubble.column < 4:
             val += getValAndIncrementBubblePosition(bubble, state, playerColor, False)
     return val
 
@@ -74,10 +71,10 @@ def applyHeuristicDiagonalUpDown(state, playerColor):
 def getValAndIncrementBubblePosition(bubble, state, color, isDownUp):
     bubble.values = []
     for i in range(0, 4):
-        columnVal = bubble.column + i
+        rowVal = bubble.row + i
         if not isDownUp:
-            columnVal = bubble.column - i
-        bubble.values.append(state.matrix[bubble.row + i][columnVal])
+            rowVal = bubble.row - i
+        bubble.values.append(state.matrix[rowVal][bubble.column + i])
     val = evaluateBubbles(bubble.values, color)
     bubble.column += 1
     if isDownUp:

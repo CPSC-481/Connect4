@@ -82,12 +82,12 @@ class Qt_window(QMainWindow):
 
         # MOVE TO NEXT STATE
 
-        testMatrix = [["red", "red", "white", "white", "white", "white", "white"],     # -4
-                      ["yellow", "red", "white", "white", "white", "white", "white"],  # -4
-                      ["white", "white", "white", "white", "white", "white", "white"], # 0
-                      ["white", "white", "white", "white", "white", "white", "white"], # 4
-                      ["white", "white", "white", "white", "white", "white", "white"], # 8
-                      ["white", "white", "white", "white", "white", "white", "white"]] # 12
+        testMatrix = [["red",    "red",  "yellow",  "red",  "red",    "red", "yellow"],
+                      ["yellow", "red",  "yellow",  "red",  "yellow", "red", "yellow"],
+                      ["red",    "red",  "yellow",  "red",  "red",    "red", "yellow"],
+                      ["yellow", "red",  "yellow",  "red",  "yellow", "red", "yellow"],
+                      ["red",    "red",  "yellow",  "red",  "red",    "red", "yellow"],
+                      ["yellow", "red",  "yellow",  "red",  "yellow", "red", "yellow"]]
 
         testColumnCounts = [2, 2, 0, 0, 0, 0, 0]
         testState = State(None, testMatrix, testColumnCounts)
