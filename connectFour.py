@@ -2,13 +2,11 @@ from PyQt5.QtWidgets import QMainWindow,  \
                             QApplication, \
                             QWidget, \
                             QMessageBox
-
 import PyQt5.QtGui as QtGui
 import sys
 from grid import gridLayout
 from gameOverChecker import gameOverChecker
 from naryTree import State, StateTree, swapTurnColor
-from stateEvaluation import evaluateState
 from minimaxFunctions import minimax
 
 START_PLAYER = "yellow"

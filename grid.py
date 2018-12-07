@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QGridLayout, \
                             QLabel
 
 
-class gridLayout():
+class gridLayout:
     def __init__(self):
         self.layout = QGridLayout()  # create a grid layout for the buttons and labels
         self.createButtonRow()
