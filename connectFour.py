@@ -70,29 +70,24 @@ class Qt_window(QMainWindow):
                 self.restartGame()
             else:
                 self.changeTurn()
-        currentState = State(None, self.matrix, self.columnPieceCounts)
-        stateTree = StateTree(currentState, 4, swapTurnColor(self.playerTurn))
-        print("askjdhflkjdsahf")
 
 # !!!TESTING AREA!!!TESTING AREA!!!TESTING AREA!!!TESTING AREA!!!TESTING AREA!!!TESTING AREA!!!
 
+        # testMatrix = [["red",    "red",  "yellow",  "red",  "red",    "red", "yellow"],
+        #               ["yellow", "red",  "yellow",  "red",  "yellow", "red", "yellow"],
+        #               ["red",    "red",  "yellow",  "red",  "red",    "red", "yellow"],
+        #               ["yellow", "red",  "yellow",  "red",  "yellow", "red", "yellow"],
+        #               ["red",    "red",  "yellow",  "red",  "red",    "red", "yellow"],
+        #               ["yellow", "red",  "yellow",  "red",  "yellow", "red", "yellow"]]
+        # testColumnCounts = [2, 2, 0, 0, 0, 0, 0]
+        # testState = State(None, testMatrix, testColumnCounts)
+        # val = evaluateState(testState, "red")
+        # print("Heuristic Value: ", val)
 
-        # nextMoveNumber = minimax(stateTree, self.playerTurn)
-        # print("Next Minimax State: ", nextMoveNumber)
-
-        # MOVE TO NEXT STATE
-
-        testMatrix = [["red",    "red",  "yellow",  "red",  "red",    "red", "yellow"],
-                      ["yellow", "red",  "yellow",  "red",  "yellow", "red", "yellow"],
-                      ["red",    "red",  "yellow",  "red",  "red",    "red", "yellow"],
-                      ["yellow", "red",  "yellow",  "red",  "yellow", "red", "yellow"],
-                      ["red",    "red",  "yellow",  "red",  "red",    "red", "yellow"],
-                      ["yellow", "red",  "yellow",  "red",  "yellow", "red", "yellow"]]
-
-        testColumnCounts = [2, 2, 0, 0, 0, 0, 0]
-        testState = State(None, testMatrix, testColumnCounts)
-        val = evaluateState(testState, "red")
-        print("Heuristic Value: ", val)
+        currentState = State(None, self.matrix, self.columnPieceCounts)
+        stateTree = StateTree(currentState, 4, swapTurnColor(self.playerTurn))
+        nextMoveNumber = minimax(stateTree, self.playerTurn)
+        print("Next Minimax State: ", nextMoveNumber)
 
 # !!!TESTING AREA!!!TESTING AREA!!!TESTING AREA!!!TESTING AREA!!!TESTING AREA!!!TESTING AREA!!!
 

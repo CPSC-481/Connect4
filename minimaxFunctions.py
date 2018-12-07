@@ -27,6 +27,9 @@ def getNextMinimaxLayer(currentLevelNodes, isMax):
             newNodeList.append(node)
         elif newNodeList[-1].parent is node.parent:
             newNodeList[-1] = testIfNextNextNodeBetter(node, newNodeList[-1], isMax)
+    for index, node in enumerate(newNodeList):
+        node.parent.value = node.value
+        newNodeList[index] = node.parent
     return newNodeList
 
 
@@ -43,7 +46,7 @@ def testIfNextNextNodeBetter(newNode, oldNode, isMax):
 def getMaxOrMinState(bestState, testState, isMax=True):
     if not bestState:
         bestState = getInfiniteState(isMax)
-    isGreaterValue = bestState <= testState
+    isGreaterValue = bestState.value <= testState.value
     if isGreaterValue:
         if isMax:
             return testState
@@ -54,7 +57,7 @@ def getMaxOrMinState(bestState, testState, isMax=True):
 
 
 def getInfiniteState(isMax):
-    infiniteState = State(None, None, None)
+    infiniteState = State()
     infiniteState.value = float("-inf")
     if not isMax:
         infiniteState.value = float("inf")

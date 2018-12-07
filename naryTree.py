@@ -1,11 +1,14 @@
 
 
 class State:
-    def __init__(self, parent, matrix, columnCounts):
+    def __init__(self, parent=None, matrix=None, columnCounts=None):
+
         self.parent = parent
         self.children = []                              # an empty list
-        self.matrix = copyMatrix(matrix)                # a matrix
-        self.columnCounts = columnCounts[:]             # a counter
+        if matrix:
+            self.matrix = copyMatrix(matrix)                # a matrix
+        if columnCounts:
+            self.columnCounts = columnCounts[:]             # a counter
         self.value = None                               # none is null
         self.alphaBeta = {"alpha": None, "beta": None}  # values for alpha and beta. none equivalent to null
 
@@ -39,6 +42,8 @@ def swapTurnColor(color):
     return color
 
 def copyMatrix(matrix):
+    if not matrix:
+        return None
     newMatrix = []
     for row in matrix:
         newMatrix.append(row[:])
