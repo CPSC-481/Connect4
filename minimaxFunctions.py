@@ -4,7 +4,7 @@ from naryTree import State
 
 
 def minimax(stateTree, color):
-    isMax = stateTree.isMax
+    isMax = getLeafMinOrMax(stateTree.isMax, stateTree.plyLevel)
     currentLevelNodes = stateTree.leafs[:]
     while currentLevelNodes[0].parent is not stateTree.root:
         for state in currentLevelNodes:
@@ -62,3 +62,10 @@ def getInfiniteState(isMax):
     if not isMax:
         infiniteState.value = float("inf")
     return infiniteState
+
+
+def getLeafMinOrMax(isMax, plyLevel):
+    if plyLevel % 2 is 0:
+        return isMax
+    return not isMax
+

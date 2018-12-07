@@ -59,38 +59,35 @@ class Qt_window(QMainWindow):
 
     def dropPiece(self, widget):
         column = self.grid.layout.indexOf(widget)
+        self.makeMove(column)
+        if self.isGameOver():
+            self.popupGameOver()
+            self.restartGame()
+        else:
+            self.changeTurn()
+        self.enemyMove()
+
+    def enemyMove(self):
+        self.enableButtonRow(False)
+        q_app.processEvents()
+        currentState = State(None, self.matrix, self.columnPieceCounts)
+        stateTree = StateTree(currentState, 4, swapTurnColor(self.playerTurn))
+        enemyMoveNumber = minimax(stateTree, self.playerTurn)
+        self.makeMove(enemyMoveNumber)
+        self.enableButtonRow(True)
+
+    def enableButtonRow(self, enabled):
+        for index in range(0, 7):
+            button = self.grid.layout.itemAt(index).widget()
+            button.setEnabled(enabled)
+
+    def makeMove(self, column):
         if self.columnPieceCounts[column] < 7:
             self.columnPieceCounts[column] += 1
             row = self.columnPieceCounts[column]
             self.matrix[row - 1][column] = self.playerTurn
             self.grid.getGridWidget(7 - row, column + 1).setStyleSheet("background-color:" +
-                            self.playerTurn + "; border-radius: 21; border: 1px inset black; height: 20; width: 20;")
-            if self.isGameOver():
-                self.popupGameOver()
-                self.restartGame()
-            else:
-                self.changeTurn()
-
-# !!!TESTING AREA!!!TESTING AREA!!!TESTING AREA!!!TESTING AREA!!!TESTING AREA!!!TESTING AREA!!!
-
-        # testMatrix = [["red",    "red",  "yellow",  "red",  "red",    "red", "yellow"],
-        #               ["yellow", "red",  "yellow",  "red",  "yellow", "red", "yellow"],
-        #               ["red",    "red",  "yellow",  "red",  "red",    "red", "yellow"],
-        #               ["yellow", "red",  "yellow",  "red",  "yellow", "red", "yellow"],
-        #               ["red",    "red",  "yellow",  "red",  "red",    "red", "yellow"],
-        #               ["yellow", "red",  "yellow",  "red",  "yellow", "red", "yellow"]]
-        # testColumnCounts = [2, 2, 0, 0, 0, 0, 0]
-        # testState = State(None, testMatrix, testColumnCounts)
-        # val = evaluateState(testState, "red")
-        # print("Heuristic Value: ", val)
-
-        currentState = State(None, self.matrix, self.columnPieceCounts)
-        stateTree = StateTree(currentState, 4, swapTurnColor(self.playerTurn))
-        nextMoveNumber = minimax(stateTree, self.playerTurn)
-        print("Next Minimax State: ", nextMoveNumber)
-
-# !!!TESTING AREA!!!TESTING AREA!!!TESTING AREA!!!TESTING AREA!!!TESTING AREA!!!TESTING AREA!!!
-
+                                                                       self.playerTurn + "; border-radius: 21; border: 1px inset black; height: 20; width: 20;")
 
     def isGameOver(self):
         checker = gameOverChecker(self.matrix)
