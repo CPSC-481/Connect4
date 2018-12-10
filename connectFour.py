@@ -10,7 +10,7 @@ from naryTree import State, StateTree, swapTurnColor
 from minimaxFunctions import minimax
 
 START_PLAYER = "yellow"
-PLY_LEVEL = 6
+PLY_LEVEL = 5
 
 
 class Qt_window(QMainWindow):
@@ -60,7 +60,8 @@ class Qt_window(QMainWindow):
         column = self.grid.layout.indexOf(widget)
         if self.columnPieceCounts[column] < 6:
             self.makeMove(column)
-            if self.checkForGameRestart():
+            self.playerTurn = swapTurnColor(self.playerTurn)
+            if not self.checkForGameRestart():
                 self.enemyMove()
                 self.checkForGameRestart()
 
