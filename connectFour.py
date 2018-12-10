@@ -10,6 +10,7 @@ from naryTree import State, StateTree, swapTurnColor
 from minimaxFunctions import minimax
 
 START_PLAYER = "yellow"
+PLY_LEVEL = 6
 
 
 class Qt_window(QMainWindow):
@@ -59,21 +60,22 @@ class Qt_window(QMainWindow):
         column = self.grid.layout.indexOf(widget)
         if self.columnPieceCounts[column] < 6:
             self.makeMove(column)
-            if self.isGameOver():
-                self.popupGameOver()
-                self.restartGame()
-            else:
-                self.changeTurn()
+            if self.checkForGameRestart():
                 self.enemyMove()
-                if self.isGameOver():
-                    self.popupGameOver()
-                    self.restartGame()
+                self.checkForGameRestart()
+
+    def checkForGameRestart(self):
+        if self.isGameOver():
+            self.popupGameOver()
+            self.restartGame()
+            return True
+        return False
 
     def enemyMove(self):
         self.enableButtonRow(False)
         q_app.processEvents()
         currentState = State(None, self.matrix, self.columnPieceCounts)
-        stateTree = StateTree(currentState, 5, self.playerTurn)
+        stateTree = StateTree(currentState, PLY_LEVEL, self.playerTurn)
         enemyMoveNumber = minimax(stateTree, self.playerTurn)
         self.makeMove(enemyMoveNumber)
         self.enableButtonRow(True)
@@ -91,6 +93,7 @@ class Qt_window(QMainWindow):
             self.matrix[row - 1][column] = self.playerTurn
             self.grid.getGridWidget(7 - row, column + 1).setStyleSheet("background-color:" +
                                                                        self.playerTurn + "; border-radius: 21; border: 1px inset black; height: 20; width: 20;")
+            q_app.processEvents()
 
     def isGameOver(self):
         checker = gameOverChecker(self.matrix)
