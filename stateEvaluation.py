@@ -101,6 +101,8 @@ def evaluateBubbles(bubble, playerColor):
     if colorCount is 0:
         return 1
     val = 2 ** colorCount
+    if colorCount is 4:
+        val = float("inf")
     if colorEncountered is not playerColor:
         val = -val
     return val

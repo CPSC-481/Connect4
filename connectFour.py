@@ -57,22 +57,27 @@ class Qt_window(QMainWindow):
 
     def dropPiece(self, widget):
         column = self.grid.layout.indexOf(widget)
-        self.makeMove(column)
-        if self.isGameOver():
-            self.popupGameOver()
-            self.restartGame()
-        else:
-            self.changeTurn()
-        self.enemyMove()
+        if self.columnPieceCounts[column] < 6:
+            self.makeMove(column)
+            if self.isGameOver():
+                self.popupGameOver()
+                self.restartGame()
+            else:
+                self.changeTurn()
+                self.enemyMove()
+                if self.isGameOver():
+                    self.popupGameOver()
+                    self.restartGame()
 
     def enemyMove(self):
         self.enableButtonRow(False)
         q_app.processEvents()
         currentState = State(None, self.matrix, self.columnPieceCounts)
-        stateTree = StateTree(currentState, 4, swapTurnColor(self.playerTurn))
+        stateTree = StateTree(currentState, 5, self.playerTurn)
         enemyMoveNumber = minimax(stateTree, self.playerTurn)
         self.makeMove(enemyMoveNumber)
         self.enableButtonRow(True)
+        self.playerTurn = swapTurnColor(self.playerTurn)
 
     def enableButtonRow(self, enabled):
         for index in range(0, 7):

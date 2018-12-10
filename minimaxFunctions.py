@@ -49,11 +49,11 @@ def getMaxOrMinState(bestState, testState, isMax=True):
     isGreaterValue = bestState.value <= testState.value
     if isGreaterValue:
         if isMax:
-            return testState
-        return bestState
+            return True
+        return False
     if isMax:
-        return bestState
-    return testState
+        return False
+    return True
 
 
 def getInfiniteState(isMax):
