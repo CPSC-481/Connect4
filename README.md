@@ -3,8 +3,11 @@
 Team Members:
 
 Joseph Chau
+
 Daniel Sollis
+
 Dominick Weaver
+
 Sarah Nuno
 
 To run this program, you'll have to download and install PyQt5 library.
