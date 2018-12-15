@@ -14,7 +14,7 @@ To run this program, you'll have to download and install Qt 5.9.1, as well as th
 
 Qt can be found from https://www.qt.io/ while the PyQt library is available through pip
 
-After PyQt5 has been installed, you can execute the program once you have downloaded and unzipped the file by launching the main file 'connnectiFour.py'
+After PyQt5 has been installed, you can execute the program once you have downloaded and unzipped the file by launching the main file 'connnectFour.py'
 
 The player moves first and is the color yellow, although this can be changed through a global variable in the main file. Select a column that you would like the token placed, the AI will then play
 it's turn, this continues back and forth until a player has 4 of their pieces in a row.
